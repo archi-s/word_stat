@@ -2,7 +2,7 @@ WordStat collects statistics from bukvarix.com on the usual and "exact" request;
 ==========
 
 Installation
--------------------
+------------------
 ```ruby
 $ gem install WordStat
 ```
