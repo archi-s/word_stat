@@ -16,7 +16,7 @@ begin
   elsif options[:google]
     WordStat::ParserGoogle.new.run
   else
-    puts 'Run with one of the flags -c/-b/-g'
+    puts 'Run with one of the flags: -c/-b/-g'
     exit
   end
 rescue StandardError => e

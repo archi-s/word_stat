@@ -10,7 +10,7 @@ module WordStat
         begin
           open('http://bukvarix.com', proxy: "http://#{proxy}")
         rescue StandardError => e
-          puts "Error #{proxy} - #{e.message}"
+          puts "Error: #{proxy} - #{e.message}"
           @proxy_list.delete(proxy)
         end
         progress.increment

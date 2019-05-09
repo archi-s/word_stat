@@ -10,9 +10,9 @@ require_relative 'word_stat/parser_google'
 
 module WordStat
   VERSION = '0.0.1'.freeze
+  WORDS = Pathname.new('../data/words.txt')
   BUKVARIX_PATH = Pathname.new('../data/bukvarix.csv')
   GOOGLE_PATH = Pathname.new('../data/google.csv')
-  WORDS = Pathname.new('../data/words.txt')
   PROXY = Pathname.new('../data/proxy.txt')
   GOOD_PROXY = Pathname.new('../data/good_proxy.txt')
 end

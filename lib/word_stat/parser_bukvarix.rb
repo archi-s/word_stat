@@ -14,7 +14,7 @@ module WordStat
         begin
           data = JSON.parse(open(request(word), proxy: "http://#{@current_proxy}").read)['data'].first
         rescue StandardError => e
-          puts "Error: #{@current_proxy} - #{e.message}"
+          puts "Error #{@current_proxy} - #{e.message}"
           set_proxy
           retry
         end

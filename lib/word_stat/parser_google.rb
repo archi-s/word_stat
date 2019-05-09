@@ -14,7 +14,7 @@ module WordStat
         begin
           data = prepare(Nokogiri::HTML(open(request(word), proxy: "http://#{@current_proxy}")))
         rescue StandardError => e
-          puts "Error: #{@current_proxy} - #{e.message}"
+          puts "Error #{@current_proxy} - #{e.message}"
           set_proxy
           retry
         end

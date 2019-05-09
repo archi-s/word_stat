@@ -30,7 +30,7 @@ ParserBukvarix
 ```
 
 ParserGoogle
------------------
+----------------
   ParserGoogle collects statistics from bukvarix.com
 
 ```ruby
