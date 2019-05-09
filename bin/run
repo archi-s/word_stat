@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'slop'
+require_relative '../lib/word_stat'
+
+options = Slop.parse do |o|
+  o.bool '-c', '--checker'
+  o.bool '-b', '--bukvarix'
+  o.bool '-g', '--google'
+end
+
+begin
+  if options[:checker]
+    WordStat::ProxyChecker.new.run
+  elsif options[:bukvarix]
+    WordStat::ParserBukvarix.new.run
+  elsif options[:google]
+    WordStat::ParserGoogle.new.run
+  else
+    puts 'Run with one of the flags -c/-b/-g'
+    exit
+  end
+rescue StandardError => e
+  puts e.message
+end
