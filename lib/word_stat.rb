@@ -5,8 +5,10 @@ require 'ruby-progressbar'
 require 'nokogiri'
 require 'pathname'
 require_relative 'word_stat/proxy_checker'
+require_relative 'word_stat/parser'
 require_relative 'word_stat/parser_bukvarix'
 require_relative 'word_stat/parser_google'
+require_relative 'word_stat/merge_csv'
 
 module WordStat
   VERSION = '0.0.1'.freeze

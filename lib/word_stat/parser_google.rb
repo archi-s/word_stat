@@ -1,38 +1,17 @@
 module WordStat
-  class ParserGoogle
+  class ParserGoogle < Parser
     def initialize
-      File.new(GOOGLE_PATH, 'w') unless GOOGLE_PATH.exist?
-      start_line = `wc -l #{GOOGLE_PATH}`.to_i
-      @word_list = File.read(WORDS).split(/\n/).drop(start_line)
-      @proxy_list = File.read(GOOD_PROXY).split(/\n/)
-      set_proxy
-    end
-
-    def run
-      progress = ProgressBar.create(title: 'Parsing google', total: @word_list.length)
-      @word_list.each do |word|
-        data = parser(word)
-        save(word, data)
-        progress.increment
-      end
+      super(GOOGLE_PATH)
     end
 
     private
 
     def parser(word)
-      begin
-        prepare(Nokogiri::HTML(open(request(word), proxy: "http://#{@current_proxy}")))
-      rescue StandardError => e
-        puts "Error #{@current_proxy} - #{e.message}"
-        set_proxy
-        retry
-      end
+      super { prepare(Nokogiri::HTML(open(request(word)))) }
     end
 
-    def set_proxy
-      @proxy_counter ||= 0
-      @current_proxy = @proxy_list[@proxy_counter]
-      (@proxy_list.length - 1) > @proxy_counter ? @proxy_counter += 1 : @proxy_counter = 0
+    def request(word)
+      super { "http://google.com/search?q=\"#{word}\"" }
     end
 
     def prepare(page)
@@ -41,18 +20,8 @@ module WordStat
           .encode('UTF-8').gsub(/.*:/, '').to_i
     end
 
-    def request(word)
-      URI.escape("http://google.com/search?q=\"#{word}\"")
-    end
-
     def save(word, data)
-      CSV.open(GOOGLE_PATH, 'a') do |csv|
-        csv << if data.nil?
-                 [word, 0]
-               else
-                 [word, data]
-               end
-      end
+      data.nil? ? super { [word, 0] } : super { [word, data] }
     end
   end
 end
