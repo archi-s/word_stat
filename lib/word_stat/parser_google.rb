@@ -10,20 +10,24 @@ module WordStat
 
     def run
       progress = ProgressBar.create(title: 'Parsing google', total: @word_list.length)
-      @word_list.map do |word|
-        begin
-          data = prepare(Nokogiri::HTML(open(request(word), proxy: "http://#{@current_proxy}")))
-        rescue StandardError => e
-          puts "Error #{@current_proxy} - #{e.message}"
-          set_proxy
-          retry
-        end
+      @word_list.each do |word|
+        data = parser(word)
         save(word, data)
         progress.increment
       end
     end
 
     private
+
+    def parser(word)
+      begin
+        prepare(Nokogiri::HTML(open(request(word), proxy: "http://#{@current_proxy}")))
+      rescue StandardError => e
+        puts "Error #{@current_proxy} - #{e.message}"
+        set_proxy
+        retry
+      end
+    end
 
     def set_proxy
       @proxy_counter ||= 0
