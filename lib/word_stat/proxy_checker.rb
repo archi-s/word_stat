@@ -1,3 +1,4 @@
+
 module WordStat
   class ProxyChecker
     def initialize

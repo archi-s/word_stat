@@ -1,3 +1,4 @@
+
 module WordStat
   class ParserBukvarix < Parser
     def initialize
