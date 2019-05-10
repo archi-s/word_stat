@@ -6,6 +6,7 @@ options = Slop.parse do |o|
   o.bool '-c', '--checker'
   o.bool '-b', '--bukvarix'
   o.bool '-g', '--google'
+  o.bool '-m', '--merge_csv'
 end
 
 begin
@@ -15,10 +16,14 @@ begin
     WordStat::ParserBukvarix.new.run
   elsif options[:google]
     WordStat::ParserGoogle.new.run
+  elsif options[:merge_csv]
+    WordStat.merge_csv
   else
-    puts 'Run with one of the flags -c/-b/-g'
+    puts 'Run with one of the flags: -c/-b/-g/-m'
     exit
   end
 rescue StandardError => e
   puts e.message
 end
+
+

@@ -20,11 +20,13 @@ Metrics/BlockLength:
 Security/Open:
   Enabled: false
 
+Lint/UriEscapeUnescape:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
 Style/AsciiComments:
   Enabled: false
 
-Lint/UriEscapeUnescape:
-  Enabled: false
+
