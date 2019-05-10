@@ -1,5 +1,5 @@
 WordStat collects statistics from bukvarix.com on the usual and "exact" request; the number of results in Google on the "exact" phrase entry.
-==========
+=========
 
 Installation
 ------------------

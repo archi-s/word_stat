@@ -1,6 +1,6 @@
 require 'csv'
-require 'json'
 require 'open-uri'
+require 'json'
 require 'ruby-progressbar'
 require 'nokogiri'
 require 'pathname'

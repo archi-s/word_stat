@@ -1,3 +1,4 @@
+
 module WordStat
   class ParserGoogle < Parser
     def initialize
