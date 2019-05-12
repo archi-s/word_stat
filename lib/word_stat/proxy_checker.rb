@@ -10,20 +10,16 @@ module WordStat
         check_proxy(proxy)
         progress.increment
       end
-      save
+      File.write(GOOD_PROXY_PATH, @proxy_list.join("\n"))
     end
 
     private
 
     def check_proxy(proxy)
-        open('http://bukvarix.com', proxy: "http://#{proxy}")
-      rescue StandardError => e
-        STDERR.puts "Error: #{proxy} - #{e.message}"
-        @proxy_list.delete(proxy)
-    end
-
-    def save
-      File.write(GOOD_PROXY_PATH, @proxy_list.join("\n"))
+      open('http://bukvarix.com', proxy: "http://#{proxy}")
+    rescue StandardError => e
+      STDERR.puts "Error: #{proxy} - #{e.message}"
+      @proxy_list.delete(proxy)
     end
   end
 end
