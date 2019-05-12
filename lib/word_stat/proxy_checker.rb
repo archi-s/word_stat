@@ -1,8 +1,7 @@
-
 module WordStat
   class ProxyChecker
     def initialize
-      @proxy_list = File.read(PROXY).split(/\n/)
+      @proxy_list = File.read(PROXY_PATH).split(/\n/)
     end
 
     def run
@@ -17,16 +16,14 @@ module WordStat
     private
 
     def check_proxy(proxy)
-      begin
         open('http://bukvarix.com', proxy: "http://#{proxy}")
       rescue StandardError => e
-        puts "Error: #{proxy} - #{e.message}"
+        STDERR.puts "Error: #{proxy} - #{e.message}"
         @proxy_list.delete(proxy)
-      end
     end
 
     def save
-      File.open(GOOD_PROXY, 'w') { |f| @proxy_list.map { |proxy| f.write("#{proxy}\n") } }
+      File.write(GOOD_PROXY_PATH, @proxy_list.join("\n"))
     end
   end
 end

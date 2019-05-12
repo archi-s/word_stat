@@ -15,7 +15,7 @@ ProxyChecker
 
 ```ruby
   # check proxy list
-  $ bin/run -c or --checker
+  $ bin/word_stat -c or --checker
   # => good_proxy.txt
 ```
 
@@ -25,7 +25,7 @@ ParserBukvarix
 
 ```ruby
   # collect statistics with bukvarix.com
-  $ bin/run -b or --bukvarix
+  $ bin/word_stat -b or --bukvarix
   # => bukvarix.csv
 ```
 
@@ -35,7 +35,7 @@ ParserGoogle
 
 ```ruby
   # collect statistics with Google
-  $ bin/run -g or --google
+  $ bin/word_stat -g or --google
   # => google.csv
 ```
 
