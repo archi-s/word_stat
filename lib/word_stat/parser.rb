@@ -1,19 +1,21 @@
-
 module WordStat
   class Parser
     def initialize(path)
       @path = path
+      #@parser = self.class.to_s.downcase.gsub(/.*parser/, '').to_sym
       File.new(@path, 'w') unless @path.exist?
+      @csv = CSV.open(@path, 'a')
       start_line = `wc -l #{@path}`.to_i
-      @word_list = File.read(WORDS).split(/\n/).drop(start_line)
-      @proxy_list = File.read(GOOD_PROXY).split(/\n/)
+      @word_list = File.read(WORDS_PATH).split(/\n/).drop(start_line)
+      @proxy_list = File.read(GOOD_PROXY_PATH).split(/\n/)
       set_proxy
     end
 
     def run
       progress = ProgressBar.create(title: 'Parsing', total: @word_list.length)
       @word_list.each do |word|
-        data = parser(word)
+        page = parser(word)
+        data = prepare(page)
         save(word, data)
         progress.increment
       end
@@ -21,15 +23,11 @@ module WordStat
 
     private
 
-    def request(word)
-      URI.escape(yield)
-    end
-
     def parser(word)
       begin
-        yield
+        open(request(word), proxy: "http://#{@current_proxy}")
       rescue StandardError => e
-        puts "Error #{@current_proxy} - #{e.message}"
+        STDERR.puts "Error #{@current_proxy} - #{e.message}"
         set_proxy
         retry
       end
@@ -37,18 +35,9 @@ module WordStat
 
     def set_proxy
       @proxy_counter ||= 0
+      #@proxy_list.cycle { |proxy| @current_proxy = proxy }
       @current_proxy = @proxy_list[@proxy_counter]
       (@proxy_list.length - 1) > @proxy_counter ? @proxy_counter += 1 : @proxy_counter = 0
-    end
-
-    def save(word, data)
-      CSV.open(@path, 'a') do |csv|
-        csv << if data.nil?
-                yield[:nil]
-               else
-                yield[:data]
-               end
-      end
     end
   end
 end

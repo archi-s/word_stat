@@ -1,4 +1,3 @@
-
 module WordStat
   class ParserGoogle < Parser
     def initialize
@@ -7,22 +6,22 @@ module WordStat
 
     private
 
-    def parser(word)
-      super { prepare(Nokogiri::HTML(open(request(word)))) }
-    end
-
     def request(word)
-      super { "http://google.com/search?q=\"#{word}\"" }
+      URI.escape("http://google.com/search?q=\"#{word}\"")
     end
 
     def prepare(page)
-      page.css('#resultStats').children.to_s
+      Nokogiri::HTML(page).css('#resultStats').children.to_s
           .encode('UTF-16be', invalid: :replace, replace: '')
           .encode('UTF-8').gsub(/.*:/, '').to_i
     end
 
     def save(word, data)
-      data.nil? ? super { [word, 0] } : super { [word, data] }
+      @csv << if data.nil?
+                  [word, 0]
+                else
+                  [word, data]
+                end
     end
   end
 end

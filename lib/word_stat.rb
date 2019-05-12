@@ -12,9 +12,10 @@ require_relative 'word_stat/merge_csv'
 
 module WordStat
   VERSION = '0.0.1'.freeze
-  WORDS = Pathname.new('../data/words.txt')
-  BUKVARIX_PATH = Pathname.new('../data/bukvarix.csv')
-  GOOGLE_PATH = Pathname.new('../data/google.csv')
-  PROXY = Pathname.new('../data/proxy.txt')
-  GOOD_PROXY = Pathname.new('../data/good_proxy.txt')
+  DATA_PATH = Pathname.new('../data/')
+  WORDS_PATH = DATA_PATH.join('words.txt')
+  BUKVARIX_PATH = DATA_PATH.join('bukvarix.csv')
+  GOOGLE_PATH = DATA_PATH.join('google.csv')
+  PROXY_PATH = DATA_PATH.join('proxy.txt')
+  GOOD_PROXY_PATH = DATA_PATH.join('good_proxy.txt')
 end
