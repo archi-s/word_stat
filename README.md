@@ -39,6 +39,16 @@ ParserGoogle
   # => google.csv
 ```
 
+MergeCsv
+----------------
+  MergeCsv merges the files bukvarix.csv and google.csv
+
+```ruby
+  # merge files bukvarix.csv and google.csv
+  $ bin/word_stat -m or --merge
+  # => complete.csv
+```
+
 License
 ---------------
 The gem is available as open source under the terms of the [MIT License] (https://opensource.org/licenses/MIT).
